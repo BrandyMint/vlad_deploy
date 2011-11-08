@@ -6,7 +6,9 @@
 
 # Установка
 
-    git submodule git://github.com/dapi/vlad_deploy.git ./script/vlad
+    git submodule add git://github.com/dapi/vlad_deploy.git ./script/vlad
+    git submodule init
+    git submodule update
     cp ./script/vlad/deploy_config.rb ./config/deploy.rb
     vi ./config/deploy.rb
 

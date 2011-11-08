@@ -3,7 +3,7 @@
 
 ENV['BUNDLE_GEMFILE'] = File.expand_path('../Gemfile', __FILE__)
 
-config = File.expand_path('../deploy.rb', __FILE__)
+config = File.expand_path('../../../config/deploy.rb', __FILE__)
 
 require 'bundler/setup'
 Bundler.require(:default)
