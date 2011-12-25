@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+# http://pivotallabs.com/users/jdean/blog/articles/757-introducing-autotagger-easy-multi-stage-deployment-tagging-with-git
+# https://wincent.com/blog/automatic-deployment-numbering-in-git
+
+# REVISION=$(ssh $SERVER cat $LATEST/REVISION)
+REVISION=`git rev-parse HEAD` # номер последнего комита
+DESCRIBE=`git describe`
+LAST_TAGGED_COMMIT=$(git rev-list --tags --max-count=1)
+LAST_COMMIT=$(git rev-list --all --max-count=1)
+VERSION=$(git describe $LAST_TAGGED_COMMIT)
+
+function increase_version {
+ # VERSION=$(git describe $LAST_TAGGED_COMMIT | awk -F . '{ printf "%d.%d", $1, $2 + 1}')
+ NEW_VERSION=`echo $1 | ruby -n -e 'print $_.gsub(/\.(\d+)/) { ".#{$1.to_i+1}" }'`
+}
+
+#echo "Last tagged commit it: $LAST_TAGGED_COMMIT"
+#echo "Current revision is: $REVISION"
+#echo "Current version is: $VERSION"
+echo "Current describe is: $DESCRIBE"
+
+if [ "$LAST_TAGGED_COMMIT" != "$LAST_COMMIT" ]; then
+  increase_version $DESCRIBE
+  echo "New version is $VERSION"
+  git tag -m "Deployed $(LANG=en_GB.UTF-8; date '+%d %B %Y')." $NEW_VERSION
+  git push --tags
+  echo -n "New describe is "
+  git describe
+fi
+#if [ ! $(git describe --exact-match $REVISION 2> /dev/null) ]; then
+#echo "  warning: deployed version $REVISION is not yet tagged; tagging now as $TAG"
+#git tag -s -m "Deployed $(LANG=en_GB.UTF-8; date '+%d %B %Y')." $TAG
+#fi
+# Delete tags
+# Agit tag -d 12345
+# git push origin :refs/tags/12345
+
