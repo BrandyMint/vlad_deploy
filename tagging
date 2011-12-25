@@ -22,7 +22,7 @@ echo "Current describe is: $DESCRIBE"
 
 if [ "$LAST_TAGGED_COMMIT" != "$LAST_COMMIT" ]; then
   increase_version $DESCRIBE
-  echo "New version is $VERSION"
+  echo "New version is $NEW_VERSION"
   git tag -m "Deployed $(LANG=en_GB.UTF-8; date '+%d %B %Y')." $NEW_VERSION
   git push --tags
   echo -n "New describe is "
