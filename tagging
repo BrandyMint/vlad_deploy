@@ -5,10 +5,10 @@
 
 # REVISION=$(ssh $SERVER cat $LATEST/REVISION)
 REVISION=`git rev-parse HEAD` # номер последнего комита
-DESCRIBE=`git describe`
+DESCRIBE=`git describe --always`
 LAST_TAGGED_COMMIT=$(git rev-list --tags --max-count=1)
 LAST_COMMIT=$(git rev-list --all --max-count=1)
-VERSION=$(git describe $LAST_TAGGED_COMMIT)
+VERSION=$(git describe --tags --always $LAST_TAGGED_COMMIT | ruby -ne 'print $_.gsub(/-.*/,"")')
 
 function increase_version {
  # VERSION=$(git describe $LAST_TAGGED_COMMIT | awk -F . '{ printf "%d.%d", $1, $2 + 1}')
@@ -17,13 +17,14 @@ function increase_version {
 
 #echo "Last tagged commit it: $LAST_TAGGED_COMMIT"
 #echo "Current revision is: $REVISION"
-#echo "Current version is: $VERSION"
+echo "Current version is: $VERSION"
 echo "Current describe is: $DESCRIBE"
 
 if [ "$LAST_TAGGED_COMMIT" != "$LAST_COMMIT" ]; then
-  increase_version $DESCRIBE
+  increase_version $VERSION
   echo "New version is $NEW_VERSION"
-  git tag -m "Deployed $(LANG=en_GB.UTF-8; date '+%d %B %Y')." $NEW_VERSION
+  #git tag -m "Deployed $(LANG=en_GB.UTF-8; date '+%d %B %Y')." $NEW_VERSION
+  git tag $NEW_VERSION
   git push --tags
   echo -n "New describe is "
   git describe
