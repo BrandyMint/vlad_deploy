@@ -17,17 +17,15 @@ function increase_version {
 
 #echo "Last tagged commit it: $LAST_TAGGED_COMMIT"
 #echo "Current revision is: $REVISION"
-echo "Current version is: $VERSION"
-echo "Current describe is: $DESCRIBE"
+#echo "Current version is: $VERSION"
+#echo "Current describe is: $DESCRIBE"
 
 if [ "$LAST_TAGGED_COMMIT" != "$LAST_COMMIT" ]; then
   increase_version $VERSION
-  echo "New version is $NEW_VERSION"
-  #git tag -m "Deployed $(LANG=en_GB.UTF-8; date '+%d %B %Y')." $NEW_VERSION
-  git tag $NEW_VERSION
-  git push --tags
-  echo -n "New describe is "
-  git describe
+  # echo "New version is $NEW_VERSION"
+  git tag -f -a -m "Deployed $(LANG=en_GB.UTF-8; date '+%d %B %Y')." $NEW_VERSION
+  # git tag $NEW_VERSION
+  git push --tags 2>&1 > /dev/null
 fi
 #if [ ! $(git describe --exact-match $REVISION 2> /dev/null) ]; then
 #echo "  warning: deployed version $REVISION is not yet tagged; tagging now as $TAG"
