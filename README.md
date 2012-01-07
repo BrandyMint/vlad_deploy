@@ -15,3 +15,7 @@
 # Быстрый деплой
 
     ./script/vlad/deploy
+
+# Статейка об этом модуле
+
+* http://dapi.ru/vlad-submodule
