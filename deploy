@@ -1,2 +1,2 @@
-./script/vlad/tagging
+# ./script/vlad/tagging
 rake -N -f ./script/vlad/Rakefile vlad:deploy DEPLOY_TO=production
