@@ -48,7 +48,6 @@ namespace :vlad do
     'bundle' => 'vendor/bundle'
   }
 
-
   desc "Put revision into public/revision"
   remote_task :put_revision do
     # puts "vlad-git revision: #{source.revision(revision)}"
@@ -134,7 +133,6 @@ namespace :vlad do
   end
 
 end
-
 
 # Однажды
 # rake vlad:setup
