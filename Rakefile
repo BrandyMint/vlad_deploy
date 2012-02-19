@@ -20,6 +20,8 @@ require 'bundler/vlad'
 # puts "Текущая ветка #{current_branch}"
 ENV['DEPLOY_TO'] ||= 'production'
 
+puts "Deploy to: #{ENV['DEPLOY_TO']}"
+
 namespace :vlad do
   def skip_scm; false; end
 
@@ -128,7 +130,7 @@ namespace :vlad do
   desc 'Влад рассказывает что куда деплоит'
   task :describe do
     vers = `git describe #{current_commit}`.chomp
-    puts "Деплоим: #{current_branch} / #{current_commit} (#{vers})"
+    puts "Деплоим (#{rails_env}): #{current_branch} / #{current_commit} (#{vers})"
     puts
   end
 
