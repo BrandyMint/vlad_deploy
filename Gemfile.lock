@@ -15,17 +15,17 @@ GIT
       vlad (>= 2.1.0)
 
 GIT
-  remote: git://github.com/dbloete/vlad-extras.git
-  revision: 258ffe41e90d160de3bbe900cd50db9c36191452
-  specs:
-    vlad-extras (0.5.4)
-
-GIT
-  remote: git@github.com:dapi/vlad-unicorn.git
+  remote: git://github.com/dapi/vlad-unicorn.git
   revision: 7db2213e776d1217fed4cdf15f0f113827e84354
   specs:
     vlad-unicorn (2.1.1)
       vlad (~> 2.0)
+
+GIT
+  remote: git://github.com/dbloete/vlad-extras.git
+  revision: 258ffe41e90d160de3bbe900cd50db9c36191452
+  specs:
+    vlad-extras (0.5.4)
 
 GEM
   remote: http://rubygems.org/
