@@ -1,2 +1,16 @@
 # ./script/vlad/tagging
-rake -N -f ./script/vlad/Rakefile vlad:deploy DEPLOY_TO=production
+
+case $1 in
+  -c | --current )
+    git_branch="current"
+    ;;
+  -m | --master )
+    git_branch="master"
+    ;;
+  * )
+    echo "Must be specified parameter: -c, --current - for current branch or -m, --master - for master"
+    exit 1
+    ;;
+esac
+
+rake -N -f ./script/vlad/Rakefile vlad:deploy DEPLOY_TO=production GIT_BRANCH=$git_branch
