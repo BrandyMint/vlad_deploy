@@ -103,7 +103,7 @@ namespace :vlad do
   desc 'Reindex solr'
   remote_task :solr_reindex do
     puts "Solr reindes"
-    run "cd #{current_path}; RAILS_ENV=#{rails_env} nohup time bundle exec rake sunspot:reindex 2>&1 >> /tmp/sunspot_reindex.log &"
+    run "cd #{current_path}; RAILS_ENV=#{rails_env} nohup time bundle exec rake sunspot:reindex > /tmp/sunspot_reindex.log 2>&1 &"
   end
 
 
