@@ -52,6 +52,7 @@ namespace :vlad do
   set :shared_paths, {
     'log'    => 'log',
     'system' => 'public/system',
+    'uploads' => 'public/uploads',
     'pids'   => 'tmp/pids',
     'bundle' => 'vendor/bundle'
   }
@@ -65,6 +66,8 @@ namespace :vlad do
     export RAILS_ENV=#{rails_env} REVISION=#{airbrake_revision} REPO=#{repository} TO=#{rails_env} USER=`whoami`;
     (nohup ./script/set_revision #{current_release} 2>&1 >> /tmp/set_revision.log &)"
 
+    has_newrelic = `grep newrelic ./Gemfile`.length>0
+    has_newrelic and run "cd #{current_path}; RAILS_ENV=#{rails_env} bundle exec newrelic deployments -r #{airbrake_revision}"
     # ./script/set_revision #{current_release}"
   end
 

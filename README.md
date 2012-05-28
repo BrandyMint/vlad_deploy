@@ -20,6 +20,9 @@
     
 # Подключаем unicorn в проект 
 # Настраиваем веб-сервер (nginx/apache)
+=======
+    cp ./script/vlad/config/* ./config/
+    vi ./config/deploy.rb ./config/unicorn.rb
 
 # Быстрый деплой
 
