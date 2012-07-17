@@ -22,10 +22,10 @@ GIT
       vlad (~> 2.0)
 
 GIT
-  remote: git://github.com/dbloete/vlad-extras.git
-  revision: 258ffe41e90d160de3bbe900cd50db9c36191452
+  remote: git://github.com/dennisreimann/vlad-extras.git
+  revision: 921a85ebe20f635267ca2ab092201ff8c2838c68
   specs:
-    vlad-extras (0.5.4)
+    vlad-extras (0.5.5)
 
 GEM
   remote: http://rubygems.org/
