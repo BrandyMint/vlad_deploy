@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+current_release="$1"
+
+echo "start: $current_release $RAILS_ENV $REVISION $REPOSITORY"
+last_commit=$(git rev-list --all --max-count=1)
+
+if echo -e "$REVISION\n" | grep "$last_commit"; then
+  echo 
+else
+  echo "Разворачиваемая ревизия ($REVISION) не совпадает с послденим комитом ($last_commit)"
+  # exit 1
+fi
+
+# git_revision = 'git log origin/master --max-count=1 --pretty=%H'
+git fetch -t
+version=$(git describe --always --long $last_commit)
+
+rev_file="public/revision"
+
+cd $current_release
+echo "$version $REVISION" > public/revision.txt
+sed -i "s/HEAD/$version/" app/cells/footer/_revision.html.haml
+
+#
+# Airbrake
+#
+#bundle exec rake airbrake:deploy RAILS_ENV=#{rails_env} TO=#{rails_env} REVISION=#{revision} USER=`whoami` REPO=#{repository} >> ./tmp/airbrake_notify.log &"
+echo "notify airbrake"
+bundle exec rake airbrake:deploy
