@@ -9,12 +9,6 @@ config = File.expand_path('../../../config/deploy.rb', __FILE__)
 require 'bundler/setup'
 Bundler.require(:default)
 
-Vlad.load(:app=>'unicorn', :scm => "git", :config => config)
-
-require 'vlad/airbrake'
-require 'vlad/rvm'
-require 'vlad/delayed_job'
-require 'bundler/vlad'
 
 # Rake::RemoteTask.set :git_branch, "production"
 current_branch = `git branch 2>/dev/null | sed -e "/^\s/d" -e "s/^\*\s//"`.chomp || 'master'
@@ -25,7 +19,6 @@ ENV['DEPLOY_TO'] ||= 'production'
 puts "Deploy to: #{ENV['DEPLOY_TO']}"
 
 namespace :vlad do
-  def skip_scm; false; end
 
   if ENV['GIT_BRANCH'] == 'current'
     set :current_branch, `git branch 2>/dev/null | sed -e "/^\s/d" -e "s/^\*\s//"`.chomp
@@ -40,11 +33,9 @@ namespace :vlad do
   # Не трогаем апач
   set :web_command, "echo apachectl"
 
-  set :unicorn_command, "cd #{current_path}; RAILS_ENV=#{rails_env} bundle exec unicorn"
   set :unicorn_rc, '/etc/init.d/unicorn'
 
   set :keep_releases,	3
-  set :revision, "origin/HEAD/#{current_branch}/#{current_commit}"
   set :rake_cmd, 'bundle exec rake'
 
   set :git_branch, current_branch
@@ -59,6 +50,20 @@ namespace :vlad do
     'pids'   => 'tmp/pids',
     'bundle' => 'vendor/bundle'
   }
+end
+
+Vlad.load(:app=>'unicorn', :scm => "git", :config => config)
+
+require 'vlad/airbrake'
+require 'vlad/rvm'
+require 'vlad/delayed_job'
+require 'bundler/vlad'
+
+namespace :vlad do
+  set :unicorn_command, "cd #{current_path}; RAILS_ENV=#{rails_env} bundle exec unicorn"
+  set :revision, "origin/HEAD/#{current_branch}/#{current_commit}"
+
+  def skip_scm; false; end
 
   desc "Put revision into public/revision"
   remote_task :put_revision_large do
