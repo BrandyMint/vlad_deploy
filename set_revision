@@ -20,7 +20,7 @@ rev_file="public/revision"
 
 cd $current_release
 echo "$version $REVISION" > public/revision.txt
-sed -i "s/HEAD/$version/" app/cells/footer/_revision.html.haml
+#sed -i "s/HEAD/$version/" app/cells/footer/_revision.html.haml
 
 #
 # Airbrake
