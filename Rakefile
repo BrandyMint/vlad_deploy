@@ -39,6 +39,7 @@ namespace :vlad do
   set :web_command, "echo apachectl"
 
   set :unicorn_command, "cd #{current_path}; RAILS_ENV=#{rails_env} bundle exec unicorn"
+  set :unicorn_rc, '/etc/init.d/unicorn'
 
   set :keep_releases,	3
   set :revision, "origin/HEAD/#{current_branch}/#{current_commit}"
@@ -114,13 +115,13 @@ namespace :vlad do
 
     remote_task :upgrade do
       puts "Upgrade unicorn.."
-      sudo "/etc/init.d/unicorn upgrade"
+      sudo "#{unicorn_rc} upgrade"
       puts "Unicorn upgraded"
     end
 
     remote_task :restart do 
       puts "Restart unicorn.."
-      sudo "/etc/init.d/unicorn restart"
+      sudo "#{unicorn_rc} restart"
       puts "Unicorn restart"
     end
   end
