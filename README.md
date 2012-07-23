@@ -14,15 +14,19 @@
     cp ./script/vlad/deploy_config.rb ./config/deploy.rb
     vi ./config/deploy.rb
     
+# Подключаем unicorn в проект 
+
+   cp ./script/vlad/config/unicorn.rb ./config/
+   vi ./config/unicorn.rb  # Change application
+   
+    
 # Настройка сервера
 
-    rake -N -f ./script/vlad/Rakefile vlad:setup DEPLOY_TO=production
-    
-# Подключаем unicorn в проект 
-# Настраиваем веб-сервер (nginx/apache)
-=======
-    cp ./script/vlad/config/* ./config/
-    vi ./config/deploy.rb ./config/unicorn.rb
+    rake -N -f ./script/vlad/Rakefile vlad:setup DEPLOY_TO=production 
+
+# Настраиваем веб-сервер (nginx/apache) на сервере
+
+# git push
 
 # Быстрый деплой
 
