@@ -3,8 +3,10 @@
 rails_env = ENV['RAILS_ENV'] || 'production'
 puts "Unicorn env: #{rails_env}"
 
+application = 'brandymint.ru'
+
 # APP_ROOT = File.expand_path(File.dirname(File.dirname(__FILE__)))
-APP_PATH = '/home/wwwdata/blogs.investcafe.ru/'
+APP_PATH = "/home/wwwdata/#{application}/"
 APP_ROOT = APP_PATH + 'current'
 
 if ENV['MY_RUBY_HOME'] && ENV['MY_RUBY_HOME'].include?('rvm')
@@ -24,15 +26,15 @@ require 'bundler/setup'
 
 
 if rails_env=='production'
-  worker_processes 5
+  worker_processes 10
   working_directory APP_PATH + "current"
 
   listen APP_PATH + "shared/tmp/unicorn.sock", :backlog => 64
-  # listen "/tmp/.sock", :backlog => 64
+
   pid APP_PATH + "shared/pids/unicorn.pid"
   stderr_path APP_PATH + "shared/log/unicorn.stderr.log"
   stdout_path APP_PATH + "shared/log/unicorn.stdout.log"
-elsif rails_env=='icf'
+elsif rails_env=='stage'
   worker_processes 3
   working_directory APP_PATH + "current"
 
@@ -55,6 +57,9 @@ timeout 60
 # http://rubyenterpriseedition.com/faq.html#adapt_apps_for_cow
 preload_app true
 GC.respond_to?(:copy_on_write_friendly=) and GC.copy_on_write_friendly = true
+
+# Собираем статистику по сбору мусора на new_relic
+GC::Profiler.enable
 
 before_fork do |server, worker|
   # the following is highly recomended for Rails + "preload_app true"
