@@ -8,12 +8,6 @@ GIT
       rake-remote_task (~> 2.0)
 
 GIT
-  remote: git://github.com/dapi/vlad-extras.git
-  revision: e2016cbb5e08633518d221ddc19fe4786d8f3ad5
-  specs:
-    vlad-extras (0.5.4)
-
-GIT
   remote: git://github.com/dapi/vlad-git.git
   revision: 81493f27e4f333092d70c2fdd360fd6846149ced
   specs:
