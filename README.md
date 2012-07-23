@@ -6,7 +6,7 @@
 
 # Установка
 
-    git submodule add git://github.com/dapi/vlad_deploy.git ./script/vlad
+    git submodule add git://github.com/BrandyMint/vlad_deploy.git ./script/vlad
     git submodule init
     git submodule update
     cd ./script/vlad; bundle
