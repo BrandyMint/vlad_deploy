@@ -17,7 +17,9 @@ require 'vlad/delayed_job'
 require 'bundler/vlad'
 
 # Rake::RemoteTask.set :git_branch, "production"
-# puts "Текущая ветка #{current_branch}"
+current_branch = `git branch 2>/dev/null | sed -e "/^\s/d" -e "s/^\*\s//"`.chomp || 'master'
+puts "Текущая ветка #{current_branch}"
+
 ENV['DEPLOY_TO'] ||= 'production'
 
 puts "Deploy to: #{ENV['DEPLOY_TO']}"
@@ -47,8 +49,8 @@ namespace :vlad do
 
   set :git_branch, current_branch
 
-  #set :copy_files, [ 'config/database.yml' ]
-  #set :symlinks, copy_files
+  set :copy_files, [ 'config/database.yml' ]
+  set :symlinks, copy_files
 
   set :shared_paths, {
     'log'    => 'log',
@@ -59,7 +61,7 @@ namespace :vlad do
   }
 
   desc "Put revision into public/revision"
-  remote_task :put_revision do
+  remote_task :put_revision_large do
     # puts "vlad-git revision: #{source.revision(revision)}"
     airbrake_revision = revision.gsub(/origin.HEAD./,'')
     puts "Put revision.."
@@ -135,6 +137,24 @@ namespace :vlad do
       # С release_path не работает текущая git версия
       run "cd #{current_path}; bundle install --deployment --without #{bundle_without}"
     end
+  end
+
+  desc "Put revision into public/revision"
+  remote_task :put_revision do
+    airbrake =  "cd #{current_release}; nohup bundle exec rake airbrake:deploy RAILS_ENV=#{rails_env} TO=#{rails_env} REVISION=#{revision} USER=`whoami` REPO=#{repository} >> ./tmp/airbrake_notify.log &"
+    run "cd #{scm_path}/repo; git rev-parse HEAD > #{release_path}/public/revision.txt; #{airbrake}"
+  end
+
+  desc 'Precompile assets'
+  remote_task :precompile do
+    puts "Precompile.."
+    run "cd #{current_path}; RAILS_ENV=#{rails_env} bundle exec rake assets:clean tmp:clear assets:precompile"
+  end
+
+  desc 'Restart foreverb'
+  remote_task :foreverb do
+    puts "Foreverb.."
+    run "cd #{current_path}; RAILS_ENV=#{rails_env} nohup bundle exec ./script/foreverb-cron >> ./tmp/forever-restart.log"
   end
 
   desc 'Влад рассказывает что куда деплоит'
