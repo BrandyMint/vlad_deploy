@@ -11,14 +11,13 @@
     git submodule update
     cd ./script/vlad; bundle
     cd ../..
-    cp ./script/vlad/deploy_config.rb ./config/deploy.rb
+    cp script/vlad/config/deploy.rb config/
     vi ./config/deploy.rb
     
 # Подключаем unicorn в проект 
 
    cp ./script/vlad/config/unicorn.rb ./config/
    vi ./config/unicorn.rb  # Change application
-   
     
 # Настройка сервера
 
