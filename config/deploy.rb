@@ -19,7 +19,7 @@ namespace :vlad do
   end
 
   set :deploy_to, "/home/wwwdata/#{application}"
-  set :unicorn_rc, '/etc/init.d/unicorn-#{application}'
+  set :unicorn_rc, "/etc/init.d/unicorn-#{application}"
   set :repository, "git@github.com:BrandyMint/#{application}.git"
 
   set :deploy_tasks, %w[
