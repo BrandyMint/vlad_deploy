@@ -8,6 +8,8 @@
 #
 
 namespace :vlad do
+  require './script/vlad/config_before'
+
   set :application, "brandymint.ru"
 
   if ENV['DEPLOY_TO']=='production'
