@@ -43,13 +43,6 @@ namespace :vlad do
   set :copy_files, [ 'config/database.yml' ]
   set :symlinks, copy_files
 
-  set :shared_paths, {
-    'log'    => 'log',
-    'system' => 'public/system',
-    'uploads' => 'public/uploads',
-    'pids'   => 'tmp/pids',
-    'bundle' => 'vendor/bundle'
-  }
 end
 
 Vlad.load(:app=>'unicorn', :scm => "git", :config => config)
@@ -60,10 +53,20 @@ require 'vlad/delayed_job'
 require 'bundler/vlad'
 
 namespace :vlad do
+  def skip_scm; false; end
+
   set :unicorn_command, "cd #{current_path}; RAILS_ENV=#{rails_env} bundle exec unicorn"
   set :revision, "origin/HEAD/#{current_branch}/#{current_commit}"
 
-  def skip_scm; false; end
+  # Пути должны быть тут иначе они не засчитываются (похоже Vlad их переопределяет)
+  #
+  set :shared_paths, {
+    'log'    => 'log',
+    'system' => 'public/system',
+    'uploads' => 'public/uploads',
+    'pids'   => 'tmp/pids',
+    'bundle' => 'vendor/bundle'
+  }
 
   desc "Put revision into public/revision"
   remote_task :put_revision_large do
