@@ -11,7 +11,7 @@ namespace :vlad do
   #set :current_commit, `git rev-list --all --max-count=1`.chomp
   set :current_commit, `git rev-parse --verify HEAD`.chomp
 
-  set :rails_env, ENV['DEPLOY_TO']
+  set :rails_env, ENV['to']
   # Не трогаем апач
   set :web_command, "echo apachectl"
 

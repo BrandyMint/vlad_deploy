@@ -4,21 +4,11 @@
 #   rake vlad:deploy
 #
 # Деплой на продакшен
-#   rake vlad:deploy DEPLOY_TO=production
+#   rake vlad:deploy to=production
 #
 
 namespace :vlad do
-  require './script/vlad/config_before'
-
   set :application, "brandymint.ru"
-
-  if ENV['DEPLOY_TO']=='production'
-    set :revision, 'origin/HEAD/production'
-    set :domain, "wwwdata@#{application}"
-  elsif ENV['DEPLOY_TO']=='stage'
-    set :revision, "origin/HEAD/#{current_branch}"
-    set :domain, "wwwdata@stage.#{application}"
-  end
 
   set :deploy_to, "/home/wwwdata/#{application}"
   set :unicorn_rc, "/etc/init.d/unicorn-#{application}"

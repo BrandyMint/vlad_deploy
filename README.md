@@ -21,7 +21,7 @@
     
 # Настройка сервера
 
-    rake -N -f ./script/vlad/Rakefile vlad:setup DEPLOY_TO=production 
+    rake -N -f ./script/vlad/Rakefile vlad:setup to=production 
 
 # Настраиваем веб-сервер (nginx/apache) на сервере
 

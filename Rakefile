@@ -11,15 +11,17 @@ Bundler.require(:default)
 current_branch = `git branch 2>/dev/null | sed -e "/^\s/d" -e "s/^\*\s//"`.chomp || 'master'
 puts "Текущая ветка #{current_branch}"
 
-ENV['DEPLOY_TO'] ||= 'production'
+ENV['to'] ||= 'production'
 
-puts "Deploy to: #{ENV['DEPLOY_TO']}"
+puts "Deploy to: #{ENV['to']}"
 
 config = File.expand_path('../../../config/deploy.rb', __FILE__)
+
 Vlad.load :app=>'unicorn', :scm => "git", :config => config
 
 require 'vlad/airbrake'
-require 'tasks'
+Kernel.load './script/vlad/vlad/defaults.rb'
+Kernel.load './script/vlad/vlad/extras.rb'
 require 'vlad/rvm'
 require 'vlad/delayed_job'
 require 'bundler/vlad'
