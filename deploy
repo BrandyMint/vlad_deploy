@@ -14,4 +14,10 @@ case $1 in
     ;;
 esac
 
-rake -N -f ./script/vlad/Rakefile vlad:deploy GIT_BRANCH=$git_branch to=$2
+if [ -z "$2" ]; then
+  to='production'
+else
+  to=$2
+fi
+
+BUNDLE_GEMFILE=./script/vlad/Gemfile rake -N -f ./script/vlad/Rakefile vlad:deploy GIT_BRANCH=$git_branch to=$to
