@@ -11,7 +11,6 @@ namespace :vlad do
   set :revision, 'origin/HEAD/production'
   set :application, "brandymint.ru"
 
-  set :unicorn_rc, "/etc/init.d/unicorn-#{application}"
   set :repository, "git@github.com:BrandyMint/#{application}.git"
 
   set :deploy_tasks, %w[
