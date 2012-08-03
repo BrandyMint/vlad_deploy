@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
 namespace :vlad do
-  set :revision, 'origin/HEAD/production'
   set :domain, "wwwdata@#{application}"
+  set :deploy_to, "/home/wwwdata/#{application}"
 end

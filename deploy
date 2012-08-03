@@ -9,8 +9,9 @@ case $1 in
     ;;
   * )
     echo "Must be specified parameter: -c, --current - for current branch or -m, --master - for master"
+    echo "Второй параметр - куда деплоить (production/stage/..). production по умолчанию"
     exit 1
     ;;
 esac
 
-rake -N -f ./script/vlad/Rakefile vlad:deploy to=production GIT_BRANCH=$git_branch
+rake -N -f ./script/vlad/Rakefile vlad:deploy GIT_BRANCH=$git_branch to=$2
