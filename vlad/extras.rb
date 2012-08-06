@@ -25,9 +25,8 @@ namespace :vlad do
   desc 'Precompile assets'
   remote_task :precompile do
     puts "Precompile.."
-    symlink_assets = "rm -f #{shared_path}/public; ln -s #{current_release}/public/ #{shared_path}/"
     cmd = "cd #{current_path}; RAILS_ENV=#{rails_env} bundle exec rake assets:clean assets:precompile:primary assets:precompile:nondigest RAILS_ENV=#{rails_env} RAILS_GROUPS=assets"
-    run "#{cmd}; #{symlink_assets}"
+    run "#{cmd}; rm -f #{shared_path}/public; ln -s #{current_release}/public/ #{shared_path}/"
   end
 
   remote_task :git_fetch do
@@ -89,8 +88,7 @@ namespace :vlad do
     run "cd #{scm_path}/repo; git rev-parse HEAD > #{release_path}/public/revision.txt; #{airbrake}"
   end
 
-  desc 'Precompile assets'
-  remote_task :precompile do
+  remote_task :precompile_old do
     puts "Precompile.."
     run "cd #{current_path}; RAILS_ENV=#{rails_env} bundle exec rake assets:clean tmp:clear assets:precompile"
   end
