@@ -19,7 +19,7 @@ namespace :vlad do
            vlad:bundle:install
            vlad:migrate
            vlad:put_revision
-           vlad:precompile
+           vlad:precompile_assets
            vlad:unicorn:upgrade
            vlad:cleanup
    ]

@@ -17,6 +17,12 @@ namespace :vlad do
     # ./script/set_revision #{current_release}"
   end
 
+  desc 'Precompile assets'
+  remote_task :precompile_assets do
+    puts "Precompile.."
+    run "cd #{current_path}; RAILS_ENV=#{rails_env} bundle exec rake assets:precompile:primary assets:precompile:nondigest RAILS_ENV=#{rails_env} RAILS_GROUPS=assets"
+  end
+
   # before :"deploy:symlink", :"deploy:assets";
   # rake assets:clean:all RAILS_ENV=production RAILS_GROUPS=assets
   # rm -rf /home/wwwdata/blogs.investcafe.ru/releases/20111127125954/public/assets
