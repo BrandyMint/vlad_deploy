@@ -24,11 +24,12 @@ namespace :vlad do
   set :symlinks, copy_files
 
   set :shared_paths, {
-    'log'    => 'log',
-    'system' => 'public/system',
+    'log'     => 'log',
+    'system'  => 'public/system',
+    'assets'  => 'public/assets',
     'uploads' => 'public/uploads',
-    'pids'   => 'tmp/pids',
-    'bundle' => 'vendor/bundle'
+    'pids'    => 'tmp/pids',
+    'bundle'  => 'vendor/bundle'
   }
 
   set :unicorn_command, "cd #{current_path}; RAILS_ENV=#{rails_env} bundle exec unicorn"
