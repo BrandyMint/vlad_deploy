@@ -32,6 +32,8 @@ namespace :vlad do
     'bundle'  => 'vendor/bundle'
   }
 
-  set :unicorn_command, "cd #{current_path}; RAILS_ENV=#{rails_env} bundle exec unicorn"
+  # На current_path вылетает из-за отсутсвия deploy_to
+  # Отключаю так как мы не пользуемся таким способом запуска уникорна
+  # set :unicorn_command, "cd #{current_path}; RAILS_ENV=#{rails_env} bundle exec unicorn"
   set :revision, "origin/HEAD/#{current_branch}/#{current_commit}"
 end

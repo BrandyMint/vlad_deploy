@@ -6,6 +6,7 @@
 # Деплой на продакшен
 #   rake vlad:deploy to=production
 #
+require './script/vlad/vlad/defaults'
 
 namespace :vlad do
   set :revision, 'origin/HEAD/production'

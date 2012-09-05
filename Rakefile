@@ -20,7 +20,6 @@ config = File.expand_path('../../../config/deploy.rb', __FILE__)
 Vlad.load :app=>'unicorn', :scm => "git", :config => config
 
 require 'vlad/airbrake'
-Kernel.load './script/vlad/vlad/defaults.rb'
 Kernel.load './script/vlad/vlad/extras.rb'
 require 'vlad/rvm'
 require 'vlad/delayed_job'
