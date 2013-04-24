@@ -29,7 +29,8 @@ namespace :vlad do
     'assets'  => 'public/assets',
     'uploads' => 'public/uploads',
     'pids'    => 'tmp/pids',
-    'bundle'  => 'vendor/bundle'
+    'bundle'  => 'vendor/bundle',
+    'finam'   => 'tmp/finam'
   }
 
   set :unicorn_command, "cd #{current_path}; RAILS_ENV=#{rails_env} bundle exec unicorn"
